@@ -1,0 +1,14 @@
+{
+  "name": "RowRunner Kitchen",
+  "short_name": "Kitchen",
+  "description": "Confirm orders and mark them ready — RowRunner kitchen display.",
+  "start_url": "/",
+  "display": "fullscreen",
+  "orientation": "landscape",
+  "background_color": "#072E48",
+  "theme_color": "#072E48",
+  "icons": [
+    { "src": "/assets/logo-bird-navy.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "/assets/logo-bird-white.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "name": "rowrunner-kds",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "description": "RowRunner — Kitchen Display System (KDS). The kitchen-tablet board that confirms fan orders and marks them ready for a runner to claim. Third app in the RowRunner system; shares one Supabase `orders` table with the fan and runner apps.",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "preview": "vite preview",
+    "typecheck": "tsc -b --noEmit"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.107.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "@types/react": "^18.3.12",
+    "@types/react-dom": "^18.3.1",
+    "@vitejs/plugin-react": "^4.3.4",
+    "typescript": "^5.6.3",
+    "vite": "^5.4.11"
+  }
+}
