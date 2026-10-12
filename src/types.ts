@@ -6,11 +6,21 @@
 // owns: `confirmed_at` (kitchen accepted the ticket) and `ready_at` (food is up,
 // hand it to a runner). It never touches runner_id/stage-4 delivery.
 
-/** A seat in the venue — identical shape to the fan and runner apps' `Seat`. */
+/**
+ * A seat in the venue — identical shape to the fan and runner apps' `Seat`.
+ * Zone venues (unnumbered seating) also set zone/label/detail; format with
+ * lib/seat.ts.
+ */
 export interface Seat {
   section: string
   row: string
   seat: string
+  /** zone id the guest tapped on the venue map, e.g. "A2" or "B" */
+  zone?: string
+  /** e.g. "Section A2" / "Zone B" */
+  label?: string
+  /** e.g. "South bleachers" */
+  detail?: string
 }
 
 /** One line of an order, as the kitchen needs to make it (no pricing). */

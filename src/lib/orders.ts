@@ -112,17 +112,25 @@ function createSupabaseApi(): KdsApi {
 // ── Mock implementation (offline / no Supabase env) ──────────
 // In-memory store that streams a new order every so often — for dev only.
 function makeMockOrder(n: number): KdsOrder {
+  // Pam's Grill (URI men's soccer pilot) items + map zones.
   const menus = [
-    [{ name: 'Smash Burger', qty: 1, option: 'Double', addons: ['Extra Pickles'] }],
+    [{ name: 'Classic Cheeseburger', qty: 1, option: 'Double', addons: ['Bacon'] }],
     [
-      { name: 'Hot Dog', qty: 2, option: null, addons: [] },
-      { name: 'Draft Beer', qty: 2, option: 'IPA', addons: [] },
+      { name: 'All-Beef Hot Dog', qty: 2, option: 'Chili Dog', addons: [] },
+      { name: 'French Fries', qty: 1, option: 'Large', addons: ['Cheese Sauce'] },
     ],
-    [{ name: 'Loaded Nachos', qty: 1, option: null, addons: ['Jalapeños', 'Extra Cheese'] }],
+    [{ name: 'Mozzarella Sticks', qty: 1, option: null, addons: ['Extra Marinara'] }],
     [
       { name: 'Chicken Tenders', qty: 1, option: 'Buffalo', addons: [] },
-      { name: 'Fries', qty: 1, option: null, addons: [] },
+      { name: 'Onion Rings', qty: 1, option: null, addons: [] },
     ],
+  ]
+  const zones = [
+    { zone: 'A1', label: 'Section A1', detail: 'South bleachers' },
+    { zone: 'A3', label: 'Section A3', detail: 'South bleachers' },
+    { zone: 'B', label: 'Zone B', detail: 'North sideline' },
+    { zone: 'C', label: 'Zone C', detail: 'East end' },
+    { zone: 'A0', label: 'Section A0', detail: 'South bleachers' },
   ]
   const names = ['Alex Rivera', 'Jordan Lee', 'Sam Patel', 'Casey Nguyen', null]
   const notes = ['No onions please', 'Gluten-free bun', null, null, null]
@@ -131,7 +139,7 @@ function makeMockOrder(n: number): KdsOrder {
     orderNo: 4900 + n,
     customerName: names[n % names.length],
     notes: notes[n % notes.length],
-    seat: { section: String(100 + (n % 40)), row: String.fromCharCode(65 + (n % 20)), seat: String(1 + (n % 30)) },
+    seat: { section: zones[n % zones.length].zone, row: '', seat: '', ...zones[n % zones.length] },
     lines: menus[n % menus.length],
     placedAt: Date.now() - (n % 4) * 45000,
     stage: 1,

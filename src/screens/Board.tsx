@@ -3,6 +3,7 @@
 // glanceable from across a kitchen — big type, high contrast, one tap per card.
 import { useStore, ageLabel, urgency } from '../store/store'
 import type { KdsOrder } from '../types'
+import { seatLines } from '../lib/seat'
 import { Icon } from '../components/Icon'
 
 // urgency → chip tone for the live age timer
@@ -40,10 +41,10 @@ function OrderCard({ o, variant }: { o: KdsOrder; variant: 'new' | 'preparing' }
       <div style={{ display: 'flex', alignItems: 'flex-start', gap: 12 }}>
         <div style={{ flex: 1, minWidth: 0 }}>
           <div style={{ fontSize: 12.5, fontWeight: 800, letterSpacing: 0.6, color: 'var(--faint)', textTransform: 'uppercase' }}>
-            Section {o.seat.section} · #{o.orderNo}
+            {seatLines(o.seat).area} · #{o.orderNo}
           </div>
           <div style={{ fontSize: 30, fontWeight: 800, color: 'var(--navy)', letterSpacing: -0.5, lineHeight: 1.1 }}>
-            Row {o.seat.row} · Seat {o.seat.seat}
+            {seatLines(o.seat).spot}
           </div>
         </div>
         <span
