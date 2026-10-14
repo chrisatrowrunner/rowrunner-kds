@@ -62,16 +62,20 @@ function rowToOrder(r: OrderRow): KdsOrder {
   }
 }
 
+/**
+ * The venue this kitchen serves. The `orders` table is shared across venues, so
+ * the board is scoped to it — otherwise unfinished orders from a past event
+ * (e.g. NYC Tech Week) clog this event's board. Unset → all venues.
+ */
+const VENUE_ID: string | undefined = import.meta.env.VITE_VENUE_ID || undefined
+
 function createSupabaseApi(): KdsApi {
   const sb = getSupabase()
   const listBoard = async () => {
     // On the board = not yet ready and not yet delivered.
-    const { data, error } = await sb
-      .from('orders')
-      .select(COLS)
-      .is('ready_at', null)
-      .lt('stage', 4)
-      .order('placed_at', { ascending: true })
+    let q = sb.from('orders').select(COLS).is('ready_at', null).lt('stage', 4)
+    if (VENUE_ID) q = q.eq('venue_id', VENUE_ID)
+    const { data, error } = await q.order('placed_at', { ascending: true })
     if (error) throw error
     return (data as unknown as OrderRow[]).map(rowToOrder)
   }
