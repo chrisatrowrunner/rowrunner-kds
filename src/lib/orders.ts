@@ -69,12 +69,16 @@ function rowToOrder(r: OrderRow): KdsOrder {
  */
 const VENUE_ID: string | undefined = import.meta.env.VITE_VENUE_ID || undefined
 
+/** The event (game) this kitchen serves. Unset → all events at the venue. */
+const EVENT_ID: string | undefined = import.meta.env.VITE_EVENT_ID || undefined
+
 function createSupabaseApi(): KdsApi {
   const sb = getSupabase()
   const listBoard = async () => {
     // On the board = not yet ready and not yet delivered.
     let q = sb.from('orders').select(COLS).is('ready_at', null).lt('stage', 4)
     if (VENUE_ID) q = q.eq('venue_id', VENUE_ID)
+    if (EVENT_ID) q = q.eq('event_id', EVENT_ID)
     const { data, error } = await q.order('placed_at', { ascending: true })
     if (error) throw error
     return (data as unknown as OrderRow[]).map(rowToOrder)
